@@ -1,57 +1,77 @@
 <!doctype html>
-<html lang="bn">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AgriSpray AI</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#04120b"><title>AgriSpray AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#06150d;--card:rgba(255,255,255,.06);--line:rgba(52,211,153,.35);--tx:#e8f5ee;--mut:#8fb5a2}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#0f3a24,var(--bg) 60%);color:var(--tx);font-family:'Hind Siliguri',sans-serif;min-height:100vh}
-main{max-width:720px;margin:0 auto;padding:20px 16px 40px}
-.glass{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;backdrop-filter:blur(12px);box-shadow:0 0 18px rgba(52,211,153,.12)}
-.hero{width:100%;padding:22px;font:700 22px 'Hind Siliguri',sans-serif;border:0;border-radius:18px;color:#04140b;background:linear-gradient(135deg,#6ee7b7,#10b981);cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
-.tile{min-height:88px;font:600 16px 'Hind Siliguri',sans-serif;cursor:pointer;color:var(--tx);text-align:left}
-button:focus-visible{outline:3px solid #fff}
-.warn{border-color:#f59e0b;color:#fcd34d;margin-bottom:12px}.mut{color:var(--mut);font-size:14px}
-@media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
-</style>
-</head>
-<body>
-<main>
-<h1>🌿 AgriSpray AI</h1>
-<div id="warn"></div>
-<input id="file" type="file" accept="image/*" capture="environment" hidden>
-<button class="hero" id="scan">আগাছার ছবি তুলুন</button>
-<p class="glass" id="msg" hidden></p>
-<div class="grid">
-<button class="glass tile">ওষুধের পরামর্শ</button>
-<button class="glass tile">ফসল সুরক্ষা যাচাই</button>
-<button class="glass tile">উপকার ও অপকার বিশ্লেষণ</button>
-<button class="glass tile">আগের স্ক্যানের ইতিহাস</button>
-<button class="glass tile">আগাছার জ্ঞানভাণ্ডার</button>
-</div>
-<p class="mut">সনাক্তকরণ ১০০% নিশ্চিত নয়। ওষুধ ব্যবহারের আগে লেবেল পড়ুন ও স্থানীয় কৃষি কর্মকর্তার পরামর্শ নিন।</p>
-</main>
+:root{--bg:#04120b;--line:rgba(74,222,128,.28);--g:#22c55e;--mut:#9cc4ad;--warn:#fbbf24}
+*{box-sizing:border-box}body{margin:0;background:#020a06;color:#eafaf0;font-family:'Hind Siliguri',sans-serif}
+#app{max-width:480px;margin:0 auto;min-height:100vh;padding:14px 14px 96px;background:radial-gradient(circle at 50% -10%,#14532d 0,var(--bg) 55%)}
+a{color:inherit;text-decoration:none}
+.card{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;backdrop-filter:blur(10px);box-shadow:0 0 18px rgba(34,197,94,.1)}
+.btn{display:block;width:100%;padding:15px;border:1px solid #4ade80;border-radius:14px;background:linear-gradient(180deg,#22c55e,#15803d);color:#fff;font:700 18px 'Hind Siliguri';text-align:center;cursor:pointer;box-shadow:0 0 16px rgba(34,197,94,.35)}
+.btn.ghost{background:rgba(255,255,255,.05);box-shadow:none}
+.row{display:flex;gap:10px;align-items:center}.row>*{flex:1}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:19px;margin-bottom:6px}.top a,.top span{width:36px}
+.logo{font-size:30px;font-weight:700;margin:0}.logo i{font-style:normal;color:var(--g)}
+.mut{color:var(--mut);font-size:14px}.warn{border-color:var(--warn);color:var(--warn);font-size:14px}
+.hero{height:230px;display:grid;place-items:center;border-radius:20px;background:radial-gradient(circle at 50% 65%,#166534,transparent 65%)}
+.ring{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;font-size:90px;border:3px solid #4ade80;box-shadow:0 0 40px #22c55e,inset 0 0 30px rgba(34,197,94,.5)}
+.cta{display:flex;align-items:center;gap:12px;padding:16px;font-size:22px;font-weight:700;cursor:pointer}.cta small{display:block;font-size:14px;font-weight:400}
+.q{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;font-size:13px}.q a{padding:10px 4px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.05)}.q b{display:block;font-size:26px}
+.thumbs{display:flex;gap:8px;overflow:auto}.th{min-width:84px;text-align:center;font-size:12px;color:var(--mut)}.th div,.ph{height:64px;border-radius:12px;display:grid;place-items:center;font-size:34px;background:linear-gradient(135deg,#14532d,#365314)}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;justify-content:space-around;align-items:center;padding:8px 6px calc(8px + env(safe-area-inset-bottom));background:#06180fee;border-top:1px solid var(--line);font-size:12px;text-align:center}
+.nav a{padding:4px 8px;border-radius:12px;color:var(--mut)}.nav a.on{background:#166534;color:#fff}.nav b{display:block;font-size:22px}.nav .plus{width:52px;height:52px;border-radius:50%;background:linear-gradient(#22c55e,#15803d);color:#fff;font-size:30px;display:grid;place-items:center;margin-top:-22px;box-shadow:0 0 18px #22c55e}
+.view{height:300px;border-radius:16px;display:grid;place-items:center;font-size:110px;background:linear-gradient(#3f6212,#1a2e05);position:relative}.view:before{content:"";position:absolute;inset:40px;border:2px dashed #fff8;border-radius:14px}
+.shut{width:76px;height:76px;border-radius:50%;border:5px solid #4ade80;background:#fff;margin:10px auto;display:block;cursor:pointer}
+label{display:block;margin:10px 0 4px;color:var(--mut);font-size:15px}select{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#0a2417;color:#fff;font:500 16px 'Hind Siliguri'}
+h3{margin:12px 0 6px;color:var(--g);font-size:18px}ul{margin:0;padding:0;list-style:none}li{padding:5px 0;font-size:15px}li:before{content:"✔ ";color:var(--g)}ul.bad li:before{content:"⚠ ";color:#fb923c}
+.badge{display:inline-block;padding:4px 12px;border-radius:999px;border:1px solid var(--g);color:var(--g);font-size:14px}
+.shield{font-size:120px;text-align:center;filter:drop-shadow(0 0 20px #22c55e)}
+.g2{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;font-size:13px}
+</style></head><body><div id="app"></div>
+<nav class="nav" id="nav"></nav>
 <script>
-// ব্যাকএন্ড সার্ভারের ঠিকানা এখানে বদলান (ডিপ্লয়ের পর)
-const API = "http://localhost:8000";
-const warn = document.getElementById("warn"), msg = document.getElementById("msg"), file = document.getElementById("file"), scan = document.getElementById("scan");
-function note(t){ const d=document.createElement("div"); d.className="glass warn"; d.textContent=t; warn.appendChild(d); }
-fetch(API+"/health").then(r=>r.json()).then(h=>{ if(!h.ai_identification) note("AI সনাক্তকরণ এখনো সেটআপ করা হয়নি।"); })
-  .catch(()=>note("ব্যাকএন্ড চালু নেই (setup required)।"));
-scan.onclick = () => file.click();
-file.onchange = async () => {
-  const f = file.files[0]; if(!f) return;
-  scan.disabled = true; scan.textContent = "আপলোড হচ্ছে…"; msg.hidden = true;
-  const fd = new FormData(); fd.append("file", f);
-  try {
-    const r = await fetch(API+"/scans", {method:"POST", body:fd}), d = await r.json();
-    msg.textContent = r.ok ? ((d.result && d.result.message) || "স্ক্যান সংরক্ষিত হয়েছে") : (d.detail || "ত্রুটি হয়েছে");
-  } catch(e){ msg.textContent = "সার্ভারের সাথে সংযোগ নেই। ইন্টারনেট দেখে আবার চেষ্টা করুন."; }
-  msg.hidden = false; scan.disabled = false; scan.textContent = "আগাছার ছবি তুলুন";
+const API="http://localhost:8000"; // ডিপ্লয়ের পর ব্যাকএন্ডের ঠিকানা বসান
+const $=s=>document.querySelector(s);
+const hdr=(t,b=1)=>`<div class="top">${b?'<a href="#home">←</a>':'<span></span>'}<b>${t}</b><span></span></div>`;
+const demo=`<div class="card warn">⚠ এটি নমুনা ডেমো স্ক্রিন। বাস্তব আগাছা, ওষুধ বা মাত্রার তথ্য নয়। যাচাইকৃত ডেটা যোগ না হওয়া পর্যন্ত এটি কোনো সুপারিশ নয়।</div>`;
+const sel=(l,o)=>`<label>${l}</label><select>${o.map(x=>`<option>${x}</option>`).join("")}</select>`;
+const S={
+home:()=>`<div class="top"><span>☰</span><span></span><span>🔔</span></div>
+<p class="logo">🍃 Agri<i>Spray</i> AI</p><p class="mut" style="margin:0">আপনার স্মার্ট কৃষি সহকারী</p>
+<div class="hero"><div class="ring">🌿</div></div>
+<a class="card cta" href="#scan">📷<span style="flex:1">আগাছার ছবি তুলুন<small class="mut">AI দিয়ে শনাক্ত করুন</small></span>›</a>
+<h3 style="color:#fff">দ্রুত অ্যাক্সেস</h3>
+<div class="q"><a href="#scan"><b>🌱</b>আগাছা শনাক্তকরণ</a><a href="#field"><b>🧪</b>ওষুধ পরামর্শ</a><a href="#safe"><b>🛡️</b>ফসল সুরক্ষা যাচাই</a><a href="#history"><b>🕒</b>ইতিহাস</a></div>
+<div class="row"><h3 style="color:#fff">সাম্প্রতিক স্ক্যান</h3><a href="#history" class="mut" style="text-align:right">সব দেখুন</a></div>
+<div class="thumbs"><div class="th"><div>🌿</div>১২ মে</div><div class="th"><div>🌱</div>১০ মে</div><div class="th"><div>🍀</div>০৮ মে</div><div class="th"><div>🌾</div>০৫ মে</div></div>
+<p class="mut">সনাক্তকরণ ১০০% নিশ্চিত নয়। ওষুধ ব্যবহারের আগে লেবেল পড়ুন।</p>`,
+scan:()=>hdr("আগাছার ছবি তুলুন")+`<div class="view">🌿</div><div class="row mut" style="text-align:center"><span>গ্যালারি</span><b style="color:#fff">ছবি</b><span>টিপস</span></div>
+<input id="f" type="file" accept="image/*" capture="environment" hidden><button class="shut" id="shut" aria-label="ছবি তুলুন"></button>
+<div class="card" id="msg" hidden></div>`,
+result:()=>hdr("শনাক্তকরণ ফলাফল")+demo+`<div class="card"><div class="row"><div class="ph" style="flex:0 0 90px;height:90px">🌿</div><div><span class="mut">সম্ভাব্য আগাছা</span><h2 style="margin:2px 0">নমুনা আগাছা</h2><span class="badge">নিশ্চয়তা: —</span></div></div>
+<p><b>প্রকার:</b> যাচাই করা হয়নি</p><h3>বৈশিষ্ট্য</h3><ul><li>এখানে AI-এর বর্ণনা আসবে</li><li>কম নিশ্চয়তায় আরও ছবি চাওয়া হবে</li></ul></div>
+<h3 style="color:#fff">অনুরূপ আগাছা</h3><div class="card mut">বিকল্প সনাক্তকরণ এখানে দেখাবে</div>
+<div class="row"><a class="btn ghost" href="#scan">আবার ছবি তুলুন</a><a class="btn" href="#field">পরবর্তী ›</a></div>`,
+field:()=>hdr("ক্ষেত্রের তথ্য দিন")+`<div class="card">${sel("বর্তমান ফসল",["ধান","গম","পাট","পতিত জমি"])}${sel("পরবর্তীতে যে ফসল লাগাবেন",["ভুট্টা","ধান","সরিষা"])}${sel("কত দিনের মধ্যে লাগাবেন?",["১০ দিন পর","১৫ দিন পর","৩০ দিন পর"])}${sel("জমির অবস্থা",["শুকনা","ভেজা","জলাবদ্ধ"])}${sel("আগাছার অবস্থা",["ছোট","বড় হয়েছে","ফুল এসেছে"])}<br><a class="btn" href="#advice">পরামর্শ দেখুন</a></div>`,
+advice:()=>hdr("ওষুধ পরামর্শ")+demo+`<div class="card"><span class="badge">প্রস্তাবিত সমাধান (নমুনা)</span><div class="row" style="margin-top:10px"><div class="ph" style="flex:0 0 80px;height:100px">🧴</div><div><h2 style="margin:0">পণ্যের নাম</h2><span class="mut">সক্রিয় উপাদান: যাচাই হয়নি</span></div></div>
+<h3>ব্যবহার বিধি</h3><ul><li>মাত্রা: লেবেল থেকে যাচাই করা হয়নি</li><li>পানির পরিমাণ: লেবেল থেকে যাচাই করা হয়নি</li></ul>
+<h3>সুরক্ষা ও সতর্কতা</h3><ul class="bad"><li>হাত, মুখ ও পরিধেয় সুরক্ষা ব্যবহার করুন</li><li>লেবেল না পড়ে ব্যবহার করবেন না</li></ul></div>
+<div class="row"><a class="btn ghost" href="#benefit">উপকার ও অপকার</a><a class="btn" href="#safe">সুরক্ষা যাচাই</a></div>`,
+safe:()=>hdr("ফসল সুরক্ষা যাচাই")+demo+`<div class="card"><div class="shield">🛡️</div><h2 style="text-align:center;color:var(--g);margin:0">যাচাই বাকি</h2>
+<p class="mut" style="text-align:center">নিবন্ধন, লেবেল ও অপেক্ষার সময় যাচাই না হলে সুপারিশ আটকে থাকবে। কোনো ফসলের নিরাপত্তার নিশ্চয়তা দেওয়া হয় না।</p><a class="btn" href="#benefit">বিস্তারিত দেখুন</a></div>`,
+benefit:()=>hdr("উপকার ও অপকার")+demo+`<div class="card"><h3>🌿 উপকার</h3><ul><li>যাচাইকৃত তথ্য যোগ হলে এখানে দেখাবে</li></ul></div><div class="card"><h3 style="color:#fb923c">সম্ভাব্য অপকার</h3><ul class="bad"><li>ফসলের ক্ষতির ঝুঁকি</li><li>মানুষ ও পরিবেশের ঝুঁকি</li><li>প্রতিরোধ ক্ষমতা তৈরির ঝুঁকি</li></ul></div><a class="btn" href="#hub">নিরাপত্তা নির্দেশিকা</a>`,
+history:()=>hdr("ইতিহাস")+`<div class="card row"><div class="ph" style="flex:0 0 60px">🌿</div><div>আগাছার ছবি<br><span class="mut">এখনো কোনো স্ক্যান নেই</span></div></div><div class="card mut">ছবি তুললে এখানে জমা হবে।</div><a class="btn" href="#scan">নতুন স্ক্যান</a>`,
+hub:()=>hdr("জ্ঞান ভাণ্ডার")+`<div class="card"><div class="g2"><div class="ph">🌱</div><div class="ph">🥬</div><div class="ph">🌾</div><div class="ph">🌽</div><div class="ph">🧴</div><div class="ph">💧</div>
+<span>আগাছা পরিচিতি</span><span>সবজি ফসলের সমাধান</span><span>ধান ফসলের সমাধান</span><span>ভুট্টা ফসলের সমাধান</span><span>ওষুধের তালিকা</span><span>স্প্রে করার নিয়ম</span></div></div><p class="mut">যাচাইকৃত বাংলাদেশি তথ্য যোগ করার পর এগুলো খুলবে।</p>`
 };
-</script>
-</body>
-</html>
+function nav(h){const n=[["home","🏠","হোম"],["hub","🌱","ক্ষেত্র"],["scan","+",""],["hub","📖","জ্ঞান ভাণ্ডার"],["history","👤","প্রোফাইল"]];
+ $("#nav").innerHTML=n.map(([k,i,t])=>k=="scan"?`<a href="#scan" class="plus">+</a>`:`<a href="#${k}" class="${k==h?'on':''}"><b>${i}</b>${t}</a>`).join("")}
+function render(){const h=location.hash.slice(1)||"home";$("#app").innerHTML=(S[h]||S.home)();nav(h);scrollTo(0,0);
+ if(h=="scan"){const f=$("#f"),m=$("#msg");$("#shut").onclick=()=>f.click();f.onchange=async()=>{if(!f.files[0])return;m.hidden=false;m.textContent="আপলোড হচ্ছে…";
+  const fd=new FormData();fd.append("file",f.files[0]);
+  try{const r=await fetch(API+"/scans",{method:"POST",body:fd}),d=await r.json();m.innerHTML=(r.ok?((d.result&&d.result.message)||"সংরক্ষিত হয়েছে"):(d.detail||"ত্রুটি হয়েছে"))+'<br><a href="#result" class="mut">নমুনা ফলাফল (ডেমো) দেখুন ›</a>'}
+  catch(e){m.textContent="সার্ভারের সাথে সংযোগ নেই। ব্যাকএন্ড চালু করে আবার চেষ্টা করুন।"}}}}
+addEventListener("hashchange",render);render();
+</script></body></html>
