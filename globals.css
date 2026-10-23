@@ -1,0 +1,10 @@
+:root{--bg:#06150d;--card:rgba(255,255,255,.06);--line:rgba(52,211,153,.35);--em:#34d399;--tx:#e8f5ee;--mut:#8fb5a2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#0f3a24,var(--bg) 60%);color:var(--tx);font-family:'Hind Siliguri',sans-serif;min-height:100vh}
+main{max-width:720px;margin:0 auto;padding:20px 16px 40px}
+.glass{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;backdrop-filter:blur(12px);box-shadow:0 0 18px rgba(52,211,153,.12)}
+.hero{width:100%;padding:22px;font-size:22px;font-weight:700;border:0;border-radius:18px;color:#04140b;background:linear-gradient(135deg,#6ee7b7,#10b981);cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.tile{min-height:88px;font-weight:600;cursor:pointer;color:var(--tx);font:inherit;text-align:left}
+.tile:focus-visible,.hero:focus-visible{outline:3px solid #fff}
+.warn{border-color:#f59e0b;color:#fcd34d;margin-bottom:12px}.mut{color:var(--mut);font-size:14px}
+@media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
